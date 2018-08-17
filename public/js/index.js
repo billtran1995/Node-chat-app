@@ -8,10 +8,10 @@ var socket = io();
 socket.on("connect", function() {
   console.log("Connected to server.");
 
-  socket.emit("createMessage", {
-    from: "chan",
-    text: "Hola"
-  });
+  //   socket.emit("createMessage", {
+  //     from: "chan",
+  //     text: "Hola"
+  //   });
 });
 
 socket.on("disconnect", function() {
