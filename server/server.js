@@ -11,7 +11,7 @@ const { generateMessage } = require("./utils/message");
 // Pre setup
 // -----Set public path variable
 const path = require("path");
-const publicPath = path.join(__dirname, "..\\public");
+const publicPath = path.join(__dirname, "../public");
 
 // -----Set up http server with socket.io
 const server = http.createServer(app);
