@@ -2,9 +2,11 @@
 // -----Set up express
 const express = require("express");
 const app = express();
-// ----Other modules
+// -----Other modules
 const socketIO = require("socket.io");
 const http = require("http");
+// -----Require local modules
+const { generateMessage } = require("./utils/message");
 
 // Pre setup
 // -----Set public path variable
@@ -33,25 +35,22 @@ io.on("connection", socket => {
   //   });
 
   // socket.emit from Admin text Welcome to the chat app
-  socket.emit("createMessage", {
-    from: "Admin",
-    text: "Welcome to the chat app"
-  });
+  socket.emit(
+    "createMessage",
+    generateMessage("Admin", "Welcome to the chat app")
+  );
 
   // socket.broadcast.emit from Admin text New user joined
-  socket.broadcast.emit("createMessage", {
-    text: "New user joined"
-  });
+  socket.broadcast.emit(
+    "createMessage",
+    generateMessage("Admin", "New user joined")
+  );
 
   socket.on("createMessage", newMessage => {
     console.log("createMessage", newMessage);
 
     // io.emit() send message to all connection
-    io.emit("newMessage", {
-      from: newMessage.from,
-      text: newMessage.text,
-      created: new Date().getTime()
-    });
+    io.emit("newMessage", generateMessage(newMessage.from, newMessage.text));
 
     // socket.broadcast.emit() send to everybody but you
     // socket.broadcast.emit("newMessage", {
