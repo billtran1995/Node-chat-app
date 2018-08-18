@@ -51,7 +51,7 @@ io.on("connection", socket => {
 
     // io.emit() send message to all connection
     io.emit("newMessage", generateMessage(newMessage.from, newMessage.text));
-    callback("This is from the server"); // Callback acts as an acknowledgement
+    callback(); // Callback acts as an acknowledgement
 
     // socket.broadcast.emit() send to everybody but you
     // socket.broadcast.emit("newMessage", {
