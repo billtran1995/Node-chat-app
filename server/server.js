@@ -36,21 +36,22 @@ io.on("connection", socket => {
 
   // socket.emit from Admin text Welcome to the chat app
   socket.emit(
-    "createMessage",
+    "newMessage",
     generateMessage("Admin", "Welcome to the chat app")
   );
 
   // socket.broadcast.emit from Admin text New user joined
   socket.broadcast.emit(
-    "createMessage",
+    "newMessage",
     generateMessage("Admin", "New user joined")
   );
 
-  socket.on("createMessage", newMessage => {
+  socket.on("createMessage", (newMessage, callback) => {
     console.log("createMessage", newMessage);
 
     // io.emit() send message to all connection
     io.emit("newMessage", generateMessage(newMessage.from, newMessage.text));
+    callback("This is from the server"); // Callback acts as an acknowledgement
 
     // socket.broadcast.emit() send to everybody but you
     // socket.broadcast.emit("newMessage", {
