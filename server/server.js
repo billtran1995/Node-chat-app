@@ -6,7 +6,7 @@ const app = express();
 const socketIO = require("socket.io");
 const http = require("http");
 // -----Require local modules
-const { generateMessage } = require("./utils/message");
+const { generateMessage, generateLocationMessage } = require("./utils/message");
 
 // Pre setup
 // -----Set public path variable
@@ -59,6 +59,13 @@ io.on("connection", socket => {
     //   text: newMessage.text,
     //   createAt: new Date().getTime()
     // });
+  });
+
+  socket.on("createLocationMessage", coords => {
+    io.emit(
+      "newLocationMessage",
+      generateLocationMessage("Admin", coords.latitude, coords.longitude)
+    );
   });
 
   socket.on("disconnect", () => {
