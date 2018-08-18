@@ -2,6 +2,21 @@
 // io() initiating a request to the server to open up connection
 var socket = io();
 
+function scrollToBottom() {
+  var messages = $("#messages");
+  var new Message = messages.children("li: last-child");
+  
+  var clientHeight = messages.prop('clientHeight');
+  var scollTop = messages.prop("scrollTop");
+  var scrollHeight = messages.prop("scrollHeight");
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  if(clientHeight + scollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
+    console.log("should scroll");
+  }
+};
+
 // Avoid using arrow function on client side,
 // Only V8 from chrome work correctly with arrow function
 // If other browsers or mobile browsers, things might not work
@@ -23,6 +38,7 @@ socket.on("newMessage", function(message) {
   });
 
   $("#messages").append(html);
+  scrollToBottom();
   // var formattedTime = moment(message.created).format("h:mm a");
   // console.log("New message", message);
   // var li = $("<li></li>");
@@ -52,6 +68,7 @@ socket.on("newLocationMessage", function(message) {
   });
 
   $("#messages").append(html);
+  scrollToBottom();
 
   // var li = $("<li></li>");
   // var a = $('<a target="_blank">My current location</a>');
