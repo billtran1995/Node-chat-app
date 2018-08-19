@@ -4,18 +4,21 @@ var socket = io();
 
 function scrollToBottom() {
   var messages = $("#messages");
-  var new Message = messages.children("li: last-child");
-  
-  var clientHeight = messages.prop('clientHeight');
+  var newMessage = messages.children("li:last-child"); // beware of space(no spaces are allowed)
+
+  var clientHeight = messages.prop("clientHeight");
   var scollTop = messages.prop("scrollTop");
   var scrollHeight = messages.prop("scrollHeight");
   var newMessageHeight = newMessage.innerHeight();
   var lastMessageHeight = newMessage.prev().innerHeight();
 
-  if(clientHeight + scollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
-    console.log("should scroll");
+  if (
+    clientHeight + scollTop + newMessageHeight + lastMessageHeight >=
+    scrollHeight
+  ) {
+    messages.scrollTop(scrollHeight);
   }
-};
+}
 
 // Avoid using arrow function on client side,
 // Only V8 from chrome work correctly with arrow function
