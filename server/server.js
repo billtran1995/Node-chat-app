@@ -43,7 +43,7 @@ io.on("connection", socket => {
       return callback("Name and room name are required");
     }
 
-    socket.join(params.join);
+    socket.join(params.room);
     users.removeUser(socket.id); // Remove user from any potential room
     users.addUser(socket.id, params.name, params.room);
 
@@ -74,7 +74,7 @@ io.on("connection", socket => {
   socket.on("createMessage", (newMessage, callback) => {
     var user = users.getUser(socket.id);
 
-    if (user && isRealString(message.text)) {
+    if (user && isRealString(newMessage.text)) {
       // io.emit() send message to all connection
       io.to(user.room).emit(
         "newMessage",
